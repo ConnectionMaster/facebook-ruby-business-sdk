@@ -84,6 +84,7 @@ module FacebookAds
     field :data_source, 'CustomAudienceDataSource'
     field :data_source_types, 'string'
     field :datafile_custom_audience_uploading_status, 'string'
+    field :delete_time, 'int'
     field :delivery_status, 'CustomAudienceStatus'
     field :description, 'string'
     field :excluded_custom_audiences, { list: 'CustomAudience' }
@@ -113,8 +114,6 @@ module FacebookAds
     field :time_content_updated, 'int'
     field :time_created, 'int'
     field :time_updated, 'int'
-    field :accountid, 'string'
-    field :additionalmetadata, 'string'
     field :allowed_domains, { list: 'string' }
     field :associated_audience_id, 'int'
     field :claim_objective, { enum: -> { CLAIM_OBJECTIVE }}
@@ -122,27 +121,17 @@ module FacebookAds
     field :countries, 'string'
     field :creation_params, 'hash'
     field :dataset_id, 'string'
-    field :details, 'string'
     field :enable_fetch_or_create, 'bool'
     field :event_source_group, 'string'
     field :event_sources, { list: 'hash' }
     field :exclusions, { list: 'object' }
-    field :expectedsize, 'int'
-    field :gender, 'string'
     field :inclusions, { list: 'object' }
-    field :isprivate, 'bool'
-    field :is_household_exclusion, 'bool'
     field :list_of_accounts, { list: 'int' }
-    field :maxage, 'int'
-    field :minage, 'int'
     field :origin_audience_id, 'string'
     field :parent_audience_id, 'int'
-    field :partnerid, 'string'
     field :partner_reference_key, 'string'
     field :prefill, 'bool'
     field :product_set_id, 'string'
-    field :source, 'string'
-    field :tags, { list: 'string' }
     field :video_group_ids, { list: 'string' }
 
     has_edge :adaccounts do |edge|

@@ -25,32 +25,39 @@ module FacebookAds
   # on github and we'll fix in our codegen framework. We'll not be able to accept
   # pull request for this class.
 
-  class InstagramUser < AdObject
+  class OmegaCustomerTrx < AdObject
+    TYPE = [
+      "CM",
+      "DM",
+      "INV",
+      "PRO_FORMA",
+    ]
 
-    field :follow_count, 'int'
-    field :followed_by_count, 'int'
-    field :has_profile_picture, 'bool'
+
+    field :ad_account_ids, { list: 'string' }
+    field :amount, 'string'
+    field :amount_due, 'CurrencyAmount'
+    field :billed_amount_details, 'BilledAmountDetails'
+    field :billing_period, 'string'
+    field :campaign, 'AtlasCampaign'
+    field :cdn_download_uri, 'string'
+    field :currency, 'string'
+    field :download_uri, 'string'
+    field :due_date, 'datetime'
+    field :entity, 'string'
     field :id, 'string'
-    field :is_private, 'bool'
-    field :is_published, 'bool'
-    field :media_count, 'int'
-    field :profile_pic, 'string'
-    field :username, 'string'
+    field :invoice_date, 'datetime'
+    field :invoice_id, 'string'
+    field :invoice_type, 'string'
+    field :liability_type, 'string'
+    field :payment_status, 'string'
+    field :payment_term, 'string'
+    field :type, 'string'
     has_no_post
     has_no_delete
 
-    has_edge :agencies do |edge|
-      edge.get 'Business'
-    end
-
-    has_edge :authorized_adaccounts do |edge|
-      edge.get 'AdAccount' do |api|
-        api.has_param :business, 'string'
-      end
-      edge.post 'InstagramUser' do |api|
-        api.has_param :account_id, 'string'
-        api.has_param :business, 'string'
-      end
+    has_edge :campaigns do |edge|
+      edge.get 'InvoiceCampaign'
     end
 
   end

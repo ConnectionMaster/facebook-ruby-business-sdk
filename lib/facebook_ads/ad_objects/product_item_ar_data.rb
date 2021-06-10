@@ -25,33 +25,35 @@ module FacebookAds
   # on github and we'll fix in our codegen framework. We'll not be able to accept
   # pull request for this class.
 
-  class InstagramUser < AdObject
+  class ProductItemArData < AdObject
+    SURFACES = [
+      "B2C_MARKETPLACE",
+      "C2C_MARKETPLACE",
+      "DA",
+      "DAILY_DEALS",
+      "DAILY_DEALS_LEGACY",
+      "IG_PRODUCT_TAGGING",
+      "MARKETPLACE",
+      "MARKETPLACE_ADS_DEPRECATED",
+      "MARKETPLACE_SHOPS",
+      "OFFLINE_CONVERSIONS",
+      "SHOPS",
+      "UNIVERSAL_CHECKOUT",
+      "WHATSAPP",
+    ]
 
-    field :follow_count, 'int'
-    field :followed_by_count, 'int'
-    field :has_profile_picture, 'bool'
-    field :id, 'string'
-    field :is_private, 'bool'
-    field :is_published, 'bool'
-    field :media_count, 'int'
-    field :profile_pic, 'string'
-    field :username, 'string'
+
+    field :container_effect, 'string'
+    field :effect_icon, 'string'
+    field :effect_parameters, 'object'
+    field :picker_icon, 'string'
+    field :product_ar_link, 'object'
+    field :state, 'string'
+    field :surfaces, { list: { enum: -> { SURFACES }} }
+    has_no_id
+    has_no_get
     has_no_post
     has_no_delete
-
-    has_edge :agencies do |edge|
-      edge.get 'Business'
-    end
-
-    has_edge :authorized_adaccounts do |edge|
-      edge.get 'AdAccount' do |api|
-        api.has_param :business, 'string'
-      end
-      edge.post 'InstagramUser' do |api|
-        api.has_param :account_id, 'string'
-        api.has_param :business, 'string'
-      end
-    end
 
   end
 end

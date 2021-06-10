@@ -60,19 +60,15 @@ module FacebookAds
       edge.get 'AdStudyCell'
     end
 
+    has_edge :instances do |edge|
+      edge.get 'PrivateLiftStudyInstance'
+      edge.post 'PrivateLiftStudyInstance' do |api|
+        api.has_param :breakdown_key, 'hash'
+      end
+    end
+
     has_edge :objectives do |edge|
       edge.get 'AdStudyObjective'
-      edge.post 'AdStudyObjective' do |api|
-        api.has_param :adspixels, { list: 'object' }
-        api.has_param :applications, { list: 'object' }
-        api.has_param :customconversions, { list: 'object' }
-        api.has_param :is_primary, 'bool'
-        api.has_param :name, 'string'
-        api.has_param :offline_conversion_data_sets, { list: 'object' }
-        api.has_param :product_catalogs, { list: 'object' }
-        api.has_param :product_sets, { list: 'object' }
-        api.has_param :type, { enum: -> { AdStudyObjective::TYPE }}
-      end
     end
 
   end

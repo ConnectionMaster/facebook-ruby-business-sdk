@@ -25,33 +25,66 @@ module FacebookAds
   # on github and we'll fix in our codegen framework. We'll not be able to accept
   # pull request for this class.
 
-  class InstagramUser < AdObject
+  class ProductCatalogDiagnosticGroup < AdObject
+    AFFECTED_CHANNELS = [
+      "business_inbox_in_messenger",
+      "shops",
+      "test_capability",
+      "universal_checkout",
+      "us_marketplace",
+    ]
 
-    field :follow_count, 'int'
-    field :followed_by_count, 'int'
-    field :has_profile_picture, 'bool'
-    field :id, 'string'
-    field :is_private, 'bool'
-    field :is_published, 'bool'
-    field :media_count, 'int'
-    field :profile_pic, 'string'
-    field :username, 'string'
+    AFFECTED_FEATURES = [
+      "augmented_reality",
+      "checkout",
+    ]
+
+    SEVERITY = [
+      "MUST_FIX",
+      "OPPORTUNITY",
+    ]
+
+    TYPE = [
+      "ATTRIBUTES_INVALID",
+      "ATTRIBUTES_MISSING",
+      "CATEGORY",
+      "CHECKOUT",
+      "IMAGE_QUALITY",
+      "LOW_QUALITY_TITLE_AND_DESCRIPTION",
+      "POLICY_VIOLATION",
+      "SHOPS_VISIBILITY_ISSUES",
+    ]
+
+    SEVERITIES = [
+      "MUST_FIX",
+      "OPPORTUNITY",
+    ]
+
+    TYPES = [
+      "ATTRIBUTES_INVALID",
+      "ATTRIBUTES_MISSING",
+      "CATEGORY",
+      "CHECKOUT",
+      "IMAGE_QUALITY",
+      "LOW_QUALITY_TITLE_AND_DESCRIPTION",
+      "POLICY_VIOLATION",
+      "SHOPS_VISIBILITY_ISSUES",
+    ]
+
+
+    field :affected_channels, { list: { enum: -> { AFFECTED_CHANNELS }} }
+    field :affected_features, { list: { enum: -> { AFFECTED_FEATURES }} }
+    field :diagnostics, { list: 'object' }
+    field :error_code, 'int'
+    field :number_of_affected_items, 'int'
+    field :severity, { enum: -> { SEVERITY }}
+    field :subtitle, 'string'
+    field :title, 'string'
+    field :type, { enum: -> { TYPE }}
+    has_no_id
+    has_no_get
     has_no_post
     has_no_delete
-
-    has_edge :agencies do |edge|
-      edge.get 'Business'
-    end
-
-    has_edge :authorized_adaccounts do |edge|
-      edge.get 'AdAccount' do |api|
-        api.has_param :business, 'string'
-      end
-      edge.post 'InstagramUser' do |api|
-        api.has_param :account_id, 'string'
-        api.has_param :business, 'string'
-      end
-    end
 
   end
 end

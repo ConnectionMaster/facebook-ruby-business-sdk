@@ -62,6 +62,15 @@ module FacebookAds
       "unisex",
     ]
 
+    IMAGE_FETCH_STATUS = [
+      "DIRECT_UPLOAD",
+      "FETCHED",
+      "FETCH_FAILED",
+      "NO_STATUS",
+      "OUTDATED",
+      "PARTIAL_FETCH",
+    ]
+
     REVIEW_STATUS = [
       "",
       "approved",
@@ -92,6 +101,7 @@ module FacebookAds
       "FB_APRL_CLOTHING",
       "FB_APRL_COSTUME",
       "FB_APRL_CSTM",
+      "FB_APRL_FORMAL",
       "FB_APRL_HANDBAG",
       "FB_APRL_JEWELRY",
       "FB_APRL_SHOE",
@@ -287,12 +297,19 @@ module FacebookAds
       "FB_VEHI_PART",
     ]
 
+    MARKED_FOR_PRODUCT_LAUNCH = [
+      "default",
+      "marked",
+      "not_marked",
+    ]
+
 
     field :additional_image_cdn_urls, { list: 'hash' }
     field :additional_image_urls, { list: 'string' }
     field :additional_variant_attributes, 'hash'
     field :age_group, { enum: -> { AGE_GROUP }}
     field :applinks, 'CatalogItemAppLinks'
+    field :ar_data, 'ProductItemArData'
     field :availability, { enum: -> { AVAILABILITY }}
     field :brand, 'string'
     field :capability_to_review_status, 'hash'
@@ -315,10 +332,12 @@ module FacebookAds
     field :gtin, 'string'
     field :id, 'string'
     field :image_cdn_urls, 'hash'
+    field :image_fetch_status, { enum: -> { IMAGE_FETCH_STATUS }}
     field :image_url, 'string'
     field :images, { list: 'string' }
     field :inventory, 'int'
     field :manufacturer_part_number, 'string'
+    field :marked_for_product_launch, 'string'
     field :material, 'string'
     field :mobile_link, 'string'
     field :name, 'string'
@@ -330,6 +349,7 @@ module FacebookAds
     field :product_feed, 'ProductFeed'
     field :product_group, 'ProductGroup'
     field :product_type, 'string'
+    field :quantity_to_sell_on_facebook, 'int'
     field :retailer_id, 'string'
     field :retailer_product_group_id, 'string'
     field :review_rejection_reasons, { list: 'string' }
@@ -344,7 +364,6 @@ module FacebookAds
     field :start_date, 'string'
     field :url, 'string'
     field :visibility, { enum: -> { VISIBILITY }}
-    field :additional_image_files, { list: 'file' }
     field :additional_uploaded_image_ids, { list: 'string' }
     field :android_app_name, 'string'
     field :android_class, 'string'
@@ -369,14 +388,6 @@ module FacebookAds
     field :windows_phone_app_id, 'string'
     field :windows_phone_app_name, 'string'
     field :windows_phone_url, 'string'
-
-    has_edge :ar_data do |edge|
-      edge.post do |api|
-        api.has_param :container_effect, { enum: %w{MAKEUP }}
-        api.has_param :effect_parameters, 'hash'
-        api.has_param :picker_icon, 'file'
-      end
-    end
 
     has_edge :channels_to_integrity_status do |edge|
       edge.get 'CatalogItemChannelsToIntegrityStatus'

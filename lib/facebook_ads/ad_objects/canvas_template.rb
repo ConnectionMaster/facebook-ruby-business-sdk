@@ -25,33 +25,24 @@ module FacebookAds
   # on github and we'll fix in our codegen framework. We'll not be able to accept
   # pull request for this class.
 
-  class InstagramUser < AdObject
+  class CanvasTemplate < AdObject
 
-    field :follow_count, 'int'
-    field :followed_by_count, 'int'
-    field :has_profile_picture, 'bool'
+    field :channels, 'map<string, map<string, string>>'
+    field :description, 'string'
+    field :document, 'Canvas'
     field :id, 'string'
-    field :is_private, 'bool'
-    field :is_published, 'bool'
-    field :media_count, 'int'
-    field :profile_pic, 'string'
-    field :username, 'string'
+    field :is_multi_tab_supportable, 'bool'
+    field :is_new, 'bool'
+    field :name, 'string'
+    field :objectives, 'hash'
+    field :owner_id, 'User'
+    field :required_capabilities, { list: 'string' }
+    field :snapshot_photo, 'Photo'
+    field :status, 'string'
+    field :sub_verticals, { list: 'string' }
+    field :verticals, 'hash'
     has_no_post
     has_no_delete
-
-    has_edge :agencies do |edge|
-      edge.get 'Business'
-    end
-
-    has_edge :authorized_adaccounts do |edge|
-      edge.get 'AdAccount' do |api|
-        api.has_param :business, 'string'
-      end
-      edge.post 'InstagramUser' do |api|
-        api.has_param :account_id, 'string'
-        api.has_param :business, 'string'
-      end
-    end
 
   end
 end
